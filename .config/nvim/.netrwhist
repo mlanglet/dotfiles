@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =7
-let g:netrw_dirhist_7='/home/mlanglet/.config/nvim'
-let g:netrw_dirhist_6='/home/mlanglet/.config'
-let g:netrw_dirhist_5='/home/mlanglet'
-let g:netrw_dirhist_4='/etc/profile.d'
-let g:netrw_dirhist_3='/home/mlanglet/code/rust/minigrep/src'
-let g:netrw_dirhist_2='/home/mlanglet/code/rust/minigrep'
-let g:netrw_dirhist_1='/home/mlanglet/code/rust'
