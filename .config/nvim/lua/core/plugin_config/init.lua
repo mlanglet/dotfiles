@@ -1,5 +1,6 @@
 require("core.plugin_config.completion")
 require("core.plugin_config.gruvbox")
+require("core.plugin_config.hop")
 require("core.plugin_config.lsp")
 require("core.plugin_config.lualine")
 require("core.plugin_config.nvim-tree")
