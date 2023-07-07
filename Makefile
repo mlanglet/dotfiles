@@ -14,10 +14,17 @@ install:
 		ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf 
 		echo "Detected non-XDG installation of tmux, creating symlink in home directory!" 
 	fi
+
+	xargs sudo apt-get -y install <packages.txt
+
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 	echo "Installation completed."
 
 update: 
-	rsync -aru --exclude='Makefile' --exclude='.git/' ./ ~/
+	rsync -aru --exclude='Makefile' --exclude='packages.txt' --exclude='.git/' ./ ~/
 	echo "Update completed."
 
 sync: update

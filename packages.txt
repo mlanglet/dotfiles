@@ -1,0 +1,16 @@
+git
+jq
+xsel
+neovim
+curl
+wget
+ripgrep
+fd-find
+unzip
+zip
+tar
+zsh
+clang
+python3
+python3-pip
+golang-go
