@@ -23,6 +23,12 @@ update:
 sync: update
 	rsync -r ~/.config/nvim/ ./.config/nvim/
 	rsync -r ~/.config/tmux/ ./.config/tmux/
+	rsync -r ~/.config/git/ ./.config/git/
+	rsync \
+	  --include='.bashrc' \
+	  --include='.zshrc' \
+		--exclude='*' \
+	  ~/ ./
 	echo "Sync completed."
 	git status
 
