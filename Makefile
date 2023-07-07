@@ -6,7 +6,7 @@ all:
 	echo "Select a target: install, update, sync"
 
 install: 
-	rsync -r --exclude='Makefile' --exclude='.git/' ./ ~/
+	rsync -ar --exclude='Makefile' --exclude='.git/' ./ ~/
 		
 	TMUX_VERSION=$$(tmux -V)
 	NON_XDG_TMUX_VERSION='tmux ([0-2]\.[0-9]+[A-Za-z]?|3\.[0-2][A-Za-z]?)'
@@ -17,17 +17,14 @@ install:
 	echo "Installation completed."
 
 update: 
-	rsync -ru --exclude='Makefile' --exclude='.git/' ./ ~/
+	rsync -aru --exclude='Makefile' --exclude='.git/' ./ ~/
 	echo "Update completed."
 
 sync: update
-	rsync -r ~/.config/nvim/ ./.config/nvim/
-	rsync -r ~/.config/tmux/ ./.config/tmux/
-	rsync -r ~/.config/git/ ./.config/git/
-	rsync \
-	  --include='.bashrc' \
-	  --include='.zshrc' \
-	  ~/ ./
+	rsync -ar ~/.config/nvim/ ./.config/nvim/
+	rsync -ar ~/.config/tmux/ ./.config/tmux/
+	rsync -ar ~/.config/git/ ./.config/git/
+	cp -a ~/.bashrc ~/.zshrc ./
 	echo "Sync completed."
 	git status
 
