@@ -1,4 +1,4 @@
-git
+tmux
 jq
 xsel
 neovim
