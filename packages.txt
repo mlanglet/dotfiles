@@ -1,3 +1,4 @@
+rsync
 tmux
 jq
 xsel

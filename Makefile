@@ -6,6 +6,8 @@ all:
 	echo "Select a target: install, update, sync"
 
 install: 
+	xargs sudo apt-get -y install <packages.txt
+
 	rsync -ar --exclude='Makefile' --exclude='.git/' --exclude='packages.txt' ./ ~/
 		
 	TMUX_VERSION=$$(tmux -V)
@@ -14,8 +16,6 @@ install:
 		ln -s ~/.config/tmux/tmux.conf ~/.tmux.conf 
 		echo "Detected non-XDG installation of tmux, creating symlink in home directory!" 
 	fi
-
-	xargs sudo apt-get -y install <packages.txt
 
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
