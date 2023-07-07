@@ -6,7 +6,7 @@ all:
 	echo "Select a target: install, update, sync"
 
 install: 
-	rsync -ar --exclude='Makefile' --exclude='.git/' ./ ~/
+	rsync -ar --exclude='Makefile' --exclude='.git/' --exclude='packages.txt' ./ ~/
 		
 	TMUX_VERSION=$$(tmux -V)
 	NON_XDG_TMUX_VERSION='tmux ([0-2]\.[0-9]+[A-Za-z]?|3\.[0-2][A-Za-z]?)'
