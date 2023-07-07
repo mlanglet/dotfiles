@@ -27,7 +27,6 @@ sync: update
 	rsync \
 	  --include='.bashrc' \
 	  --include='.zshrc' \
-		--exclude='*' \
 	  ~/ ./
 	echo "Sync completed."
 	git status
