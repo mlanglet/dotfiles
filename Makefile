@@ -21,6 +21,8 @@ install:
 
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $${ZSH_CUSTOM:-$$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 	echo "Installation completed."
 
 update: 
@@ -31,7 +33,7 @@ sync: update
 	rsync -ar ~/.config/nvim/ ./.config/nvim/
 	rsync -ar ~/.config/tmux/ ./.config/tmux/
 	rsync -ar ~/.config/git/ ./.config/git/
-	cp -a ~/.bashrc ~/.zshrc ./
+	cp -a ~/.bashrc ~/.zshrc ~/.p10k.zsh ./
 	echo "Sync completed."
 	git status
 
