@@ -1,10 +1,10 @@
-local rename = "<space>lr"
-local code_actions = "<space>la"
-local definition = "<space>ld"
-local imlpementation = "<space>li"
-local references = "<space>ll"
-local hover = "<space>lh"
-local format = "<space>lf"
+local rename = '<Space>lr'
+local code_actions = '<Space>la'
+local definition = '<Space>ld'
+local imlpementation = '<Space>li'
+local references = '<Space>ll'
+local hover = '<Space>lh'
+local format = '<Space>lf'
 
 local on_attach = function(_, _)
   vim.keymap.set('n', rename, vim.lsp.buf.rename, {})
@@ -21,18 +21,18 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local rt = require("rust-tools")
 local handlers = {
-  function (server_name)
+  function(server_name)
     require("lspconfig")[server_name].setup {
       on_attach = on_attach,
       capabilities = capabilities,
     }
   end,
-  ["rust_analyzer"] = function ()
+  ["rust_analyzer"] = function()
     rt.setup {
       server = {
         on_attach = function(_, bufnr)
-          vim.keymap.set("n", hover, rt.hover_actions.hover_actions, {buffer = bufnr})
-          vim.keymap.set("n", code_actions, rt.code_action_group.code_action_group, {buffer = bufnr})
+          vim.keymap.set("n", hover, rt.hover_actions.hover_actions, { buffer = bufnr })
+          vim.keymap.set("n", code_actions, rt.code_action_group.code_action_group, { buffer = bufnr })
           vim.keymap.set('n', format, vim.lsp.buf.format, {})
           vim.keymap.set('n', rename, vim.lsp.buf.rename, {})
           vim.keymap.set('n', definition, vim.lsp.buf.definition, {})
@@ -43,7 +43,7 @@ local handlers = {
       }
     }
   end,
-  ["lua_ls"] = function ()
+  ["lua_ls"] = function()
     require('lspconfig').lua_ls.setup {
       server = {
         on_attach = on_attach,
@@ -64,7 +64,8 @@ local handlers = {
             enable = false,
           },
         }
-      }
+      },
+      single_file_support = true,
     }
   end,
 }
@@ -100,5 +101,3 @@ require("mason-lspconfig").setup({
   automatic_installation = true,
   handlers = handlers,
 })
-
-

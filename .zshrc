@@ -85,6 +85,8 @@ source $ZSH/oh-my-zsh.sh
 export GIT_CONFIG_GLOBAL=~/.config/git/config
 export PATH=$(echo "$PATH:$HOME/.local/bin:/usr/local/go/bin")
 
+. "$HOME/.cargo/env"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
