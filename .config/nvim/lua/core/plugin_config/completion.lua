@@ -27,7 +27,6 @@ cmp.setup({
     { name = 'nvim_lua' },
     { name = 'buffer' },
     { name = 'vsnip' },
-    { name = 'calc' },
   }),
   window = {
     completion = cmp.config.window.bordered(),

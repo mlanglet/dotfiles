@@ -1,14 +1,73 @@
+local rename = "<space>lr"
+local code_actions = "<space>la"
+local definition = "<space>ld"
+local imlpementation = "<space>li"
+local references = "<space>ll"
+local hover = "<space>lh"
+local format = "<space>lf"
+
 local on_attach = function(_, _)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, {})
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {})
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-  vim.keymap.set('n', 'gi', vim.lsp.buf.imlpementation, {})
-  vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, {})
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
+  vim.keymap.set('n', rename, vim.lsp.buf.rename, {})
+  vim.keymap.set('n', code_actions, vim.lsp.buf.code_action, {})
+  vim.keymap.set('n', definition, vim.lsp.buf.definition, {})
+  vim.keymap.set('n', imlpementation, vim.lsp.buf.imlpementation, {})
+  vim.keymap.set('n', references, require('telescope.builtin').lsp_references, {})
+  vim.keymap.set('n', hover, vim.lsp.buf.hover, {})
+  vim.keymap.set('n', format, vim.lsp.buf.format, {})
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+local rt = require("rust-tools")
+local handlers = {
+  function (server_name)
+    require("lspconfig")[server_name].setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+  end,
+  ["rust_analyzer"] = function ()
+    rt.setup {
+      server = {
+        on_attach = function(_, bufnr)
+          vim.keymap.set("n", hover, rt.hover_actions.hover_actions, {buffer = bufnr})
+          vim.keymap.set("n", code_actions, rt.code_action_group.code_action_group, {buffer = bufnr})
+          vim.keymap.set('n', format, vim.lsp.buf.format, {})
+          vim.keymap.set('n', rename, vim.lsp.buf.rename, {})
+          vim.keymap.set('n', definition, vim.lsp.buf.definition, {})
+          vim.keymap.set('n', imlpementation, vim.lsp.buf.imlpementation, {})
+          vim.keymap.set('n', references, require('telescope.builtin').lsp_references, {})
+        end,
+        capabilities = capabilities,
+      }
+    }
+  end,
+  ["lua_ls"] = function ()
+    require('lspconfig').lua_ls.setup {
+      server = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+      },
+      settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
+          },
+          diagnostics = {
+            globals = { "vim" },
+          },
+          workspace = {
+            library = vim.api.nvim_get_runtime_file("", true),
+          },
+          telemetry = {
+            enable = false,
+          },
+        }
+      }
+    }
+  end,
+}
 
 require("mason").setup()
 require("mason-lspconfig").setup({
@@ -39,17 +98,7 @@ require("mason-lspconfig").setup({
     "gradle_ls",
   },
   automatic_installation = true,
-  handlers = {
-    function (server_name) -- default handler (optional)
-      require("lspconfig")[server_name].setup {
-        on_attach = on_attach
-      }
-    end,
-    require("lspconfig")["rust_analyzer"].setup {
-      on_attach = on_attach,
-      capabilities = capabilities
-    }      
-  }
+  handlers = handlers,
 })
 
 
