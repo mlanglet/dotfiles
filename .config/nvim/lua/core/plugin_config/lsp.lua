@@ -68,11 +68,15 @@ local handlers = {
       single_file_support = true,
     }
   end,
+  ["bashls"] = function()
+    require('lspconfig').bashls.setup {}
+  end,
 }
 
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {
+    "bashls",
     "lua_ls",
     "dockerls",
     "docker_compose_language_service",

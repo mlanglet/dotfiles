@@ -1,9 +1,19 @@
-
 if vim.fn.has "nvim-0.7" then
   vim.api.nvim_create_autocmd(
-    {"BufWritePre"},
+    { "BufWritePre" },
     {
-      pattern = {"*.rs", "*.go", "*.kt", "*.js", "*.jsx", "*.ts", "*.tsx", "*.html", "*.css", "*.lua"},
+      pattern = {
+        "*.rs",
+        "*.go",
+        "*.kt",
+        "*.js",
+        "*.jsx",
+        "*.ts",
+        "*.tsx",
+        "*.html",
+        "*.css",
+        "*.lua",
+      },
       callback = function()
         vim.lsp.buf.format()
       end
