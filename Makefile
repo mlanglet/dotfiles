@@ -8,6 +8,7 @@ all:
 install: 
 	xargs sudo apt-get -y install <packages.txt
 
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	bash -c "$$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
