@@ -10,6 +10,7 @@ install:
 
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+	curl -s "https://get.sdkman.io" | bash
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	bash -c "$$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $${ZSH_CUSTOM:-$$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
