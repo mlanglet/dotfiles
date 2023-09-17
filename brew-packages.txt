@@ -1,0 +1,7 @@
+rsync
+tmux
+jq
+neovim
+ripgrep
+fd
+go

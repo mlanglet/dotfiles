@@ -110,8 +110,14 @@ export PATH=$(echo "$PATH:$HOME/.local/bin:/usr/local/go/bin")
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 alias lah='ls -lah'
-alias pbc='xsel --clipboard --input'
-alias pbp='xsel --clipboard --output'
+
+if [[ $(uname -s) =~ "Darwin" ]]; then
+    alias pbc='pbcopy'
+    alias pbp='pbpaste'
+else
+    alias pbc='xsel --clipboard --input'
+    alias pbp='xsel --clipboard --output'
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -119,3 +125,7 @@ alias pbp='xsel --clipboard --output'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
