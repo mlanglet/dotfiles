@@ -6,6 +6,7 @@ if [[ $OS =~ $MAC ]]; then
     exit 1
   fi
   brew tap homebrew/cask-fonts && brew install --cask font-roboto-mono-nerd-font
+  brew install --cask iterm2
   xargs brew install <brew-packages.txt
 else
   sudo apt-get update
@@ -29,3 +30,6 @@ if [[ $TMUX_VERSION =~ $NON_XDG_TMUX_VERSION ]]; then
 fi
 
 echo "Installation completed."
+if [[ $OS =~ $MAC ]]; then
+  echo "Remember to import the iTerm2 profile!"
+fi

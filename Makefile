@@ -5,12 +5,12 @@ all:
 	echo "Select a target: install, update, sync"
 
 install:
-	./install.sh
+	./scripts/install.sh
 
 update: 
-	./update.sh
+	./scripts/update.sh
 
 sync: update
-	./sync.sh
+	./scripts/sync.sh
 
 .PHONY: all install update sync
