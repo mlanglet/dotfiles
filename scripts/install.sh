@@ -7,10 +7,10 @@ if [[ $OS =~ $MAC ]]; then
   fi
   brew tap homebrew/cask-fonts && brew install --cask font-roboto-mono-nerd-font
   brew install --cask iterm2
-  xargs brew install <brew-packages.txt
+  xargs brew install <scripts/brew-packages.txt
 else
   sudo apt-get update
-  xargs sudo apt-get -y install <packages.txt
+  xargs sudo apt-get -y install <scripts/packages.txt
 fi
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -20,7 +20,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 
-rsync -ar --exclude='Makefile' --exclude='.git/' --exclude='packages.txt' ./ ~/
+./scripts/update.sh
 
 TMUX_VERSION=$(tmux -V)
 NON_XDG_TMUX_VERSION='tmux ([0-2]\.[0-9]+[A-Za-z]?|3\.[0-2][A-Za-z]?)'
