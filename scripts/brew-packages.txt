@@ -2,6 +2,7 @@ rsync
 tmux
 jq
 neovim
+tree-sitter-cli
 ripgrep
 fd
 go

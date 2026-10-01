@@ -5,6 +5,7 @@ tmux
 jq
 xsel
 neovim
+tree-sitter-cli
 curl
 wget
 ripgrep
