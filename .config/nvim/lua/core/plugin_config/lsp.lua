@@ -34,6 +34,17 @@ vim.lsp.config('lua_ls', {
   },
 })
 
+-- rustaceanvim starts rust_analyzer itself
+vim.g.rustaceanvim = {
+  server = {
+    on_attach = function(_, bufnr)
+      local opts = { buffer = bufnr }
+      vim.keymap.set('n', '<Space>lh', function() vim.cmd.RustLsp({ 'hover', 'actions' }) end, opts)
+      vim.keymap.set('n', '<Space>la', function() vim.cmd.RustLsp('codeAction') end, opts)
+    end,
+  },
+}
+
 -- Installed servers are enabled automatically by mason-lspconfig
 require("mason").setup()
 require("mason-lspconfig").setup({
@@ -61,5 +72,8 @@ require("mason-lspconfig").setup({
     "yamlls",
     "taplo",
     "gradle_ls",
+  },
+  automatic_enable = {
+    exclude = { "rust_analyzer" },
   },
 })
