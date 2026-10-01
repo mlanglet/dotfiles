@@ -1,3 +1,30 @@
+#!/usr/bin/env bash
+if [ -n "${BASH_SOURCE[0]}" ] && [ -f "$(dirname "${BASH_SOURCE[0]}")/update.sh" ]; then
+  cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit 1
+else
+  # Not run from a checkout (e.g. piped from curl): install git, clone the repo and re-run from there
+  DOTFILES_DIR=${DOTFILES_DIR:-$HOME/code/dotfiles}
+  if ! [ -x "$(command -v git)" ]; then
+    if [ -x "$(command -v apt-get)" ]; then
+      sudo apt-get update && sudo apt-get -y install git
+    elif [ -x "$(command -v dnf)" ] && [ ! -e /run/ostree-booted ]; then
+      sudo dnf -y install git
+    elif [ -x "$(command -v brew)" ]; then
+      brew install git
+    fi
+  fi
+  if ! [ -x "$(command -v git)" ]; then
+    echo "git could not be installed, please install it manually before running this script again."
+    exit 1
+  fi
+  [ -d "$DOTFILES_DIR/.git" ] || git clone "${DOTFILES_REPO:-https://github.com/mlanglet/dotfiles.git}" "$DOTFILES_DIR" || exit 1
+  # The installers below prompt for input, so give them the terminal instead of the curl pipe
+  if (exec </dev/tty) 2>/dev/null; then
+    exec bash "$DOTFILES_DIR/scripts/install.sh" </dev/tty
+  fi
+  exec bash "$DOTFILES_DIR/scripts/install.sh" </dev/null
+fi
+
 OS=$(uname -s)
 MAC='Darwin'
 if [[ $OS =~ $MAC ]]; then
