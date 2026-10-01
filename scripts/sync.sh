@@ -10,5 +10,6 @@ rsync -ar ~/.config/git/ ./.config/git/
 [ -d ~/.config/ghostty ] && rsync -ar ~/.config/ghostty/ ./.config/ghostty/
 
 cp -a ~/.bashrc ~/.zshrc ~/.p10k.zsh ./
+mkdir -p ./.claude && cp -a ~/.claude/settings.json ~/.claude/statusline-command.sh ./.claude/
 echo "Sync completed."
 git status
