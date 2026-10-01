@@ -1,78 +1,40 @@
-local rename = '<Space>lr'
-local code_actions = '<Space>la'
-local definition = '<Space>ld'
-local imlpementation = '<Space>li'
-local references = '<Space>ll'
-local hover = '<Space>lh'
-local format = '<Space>lf'
-
-local on_attach = function(_, _)
-  vim.keymap.set('n', rename, vim.lsp.buf.rename, {})
-  vim.keymap.set('n', code_actions, vim.lsp.buf.code_action, {})
-  vim.keymap.set('n', definition, vim.lsp.buf.definition, {})
-  vim.keymap.set('n', imlpementation, vim.lsp.buf.imlpementation, {})
-  vim.keymap.set('n', references, require('telescope.builtin').lsp_references, {})
-  vim.keymap.set('n', hover, vim.lsp.buf.hover, {})
-  vim.keymap.set('n', format, vim.lsp.buf.format, {})
-end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
-local rt = require("rust-tools")
-local handlers = {
-  function(server_name)
-    require("lspconfig")[server_name].setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-    }
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local opts = { buffer = args.buf }
+    vim.keymap.set('n', '<Space>lr', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<Space>la', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<Space>ld', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', '<Space>li', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<Space>ll', require('telescope.builtin').lsp_references, opts)
+    vim.keymap.set('n', '<Space>lh', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', '<Space>lf', vim.lsp.buf.format, opts)
   end,
-  ["rust_analyzer"] = function()
-    rt.setup {
-      server = {
-        on_attach = function(_, bufnr)
-          vim.keymap.set("n", hover, rt.hover_actions.hover_actions, { buffer = bufnr })
-          vim.keymap.set("n", code_actions, rt.code_action_group.code_action_group, { buffer = bufnr })
-          vim.keymap.set('n', format, vim.lsp.buf.format, {})
-          vim.keymap.set('n', rename, vim.lsp.buf.rename, {})
-          vim.keymap.set('n', definition, vim.lsp.buf.definition, {})
-          vim.keymap.set('n', imlpementation, vim.lsp.buf.imlpementation, {})
-          vim.keymap.set('n', references, require('telescope.builtin').lsp_references, {})
-        end,
-        capabilities = capabilities,
-      }
-    }
-  end,
-  ["lua_ls"] = function()
-    require('lspconfig').lua_ls.setup {
-      server = {
-        on_attach = on_attach,
-        capabilities = capabilities,
+})
+
+vim.lsp.config('*', {
+  capabilities = require("cmp_nvim_lsp").default_capabilities(),
+})
+
+vim.lsp.config('lua_ls', {
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
       },
-      settings = {
-        Lua = {
-          runtime = {
-            version = 'LuaJIT',
-          },
-          diagnostics = {
-            globals = { "vim" },
-          },
-          workspace = {
-            library = vim.api.nvim_get_runtime_file("", true),
-          },
-          telemetry = {
-            enable = false,
-          },
-        }
+      diagnostics = {
+        globals = { "vim" },
       },
-      single_file_support = true,
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
     }
-  end,
-  ["bashls"] = function()
-    require('lspconfig').bashls.setup {}
-  end,
-}
+  },
+})
 
+-- Installed servers are enabled automatically by mason-lspconfig
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {
@@ -82,10 +44,9 @@ require("mason-lspconfig").setup({
     "docker_compose_language_service",
     "rust_analyzer",
     "terraformls",
-    "grammarly",
     "clangd",
     "marksman",
-    "tsserver",
+    "ts_ls",
     "emmet_ls",
     "cssls",
     "lemminx",
@@ -96,12 +57,9 @@ require("mason-lspconfig").setup({
     "eslint",
     "jsonls",
     "tailwindcss",
-    "lua_ls",
     "kotlin_language_server",
     "yamlls",
     "taplo",
     "gradle_ls",
   },
-  automatic_installation = true,
-  handlers = handlers,
 })

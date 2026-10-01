@@ -23,20 +23,13 @@ return require('packer').startup(function(use)
   use 'nvim-treesitter/nvim-treesitter'
   use {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.2',
+    tag = 'v0.2.2',
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
   use {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
-  }
-  use {
-    'simrat39/rust-tools.nvim',
-    requires = {
-      { 'nvim-lua/plenary.nvim' },
-      { 'mfussenegger/nvim-dap' },
-    }
   }
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
